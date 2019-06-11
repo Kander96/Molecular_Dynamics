@@ -3,7 +3,7 @@
 
 #include "math.h"
 
-float random();
+float aleatorio();
 
 float gaussiana(float mu, float sigma);
 

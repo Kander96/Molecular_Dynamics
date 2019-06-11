@@ -18,3 +18,24 @@ float set_box(float *X, int N, float L){
 	}
 	return dL;
 }
+
+float set_v(float *v, int N, float T){
+
+	float sigma=sqrt(T);
+	
+	for(int i=0; i<3*N; i++)
+		v[i]=gaussiana(0.0,sigma);
+	
+	float vcm[3]={0,0,0};
+	
+	for(int i=0; i<N; i++){
+		for(int k=0; k<3; k++)
+			vcm[k]+=v[3*i+k]/N;
+	}
+	
+	for(int i=0; i<N; i++){
+		for(int k=0; k<3; k++)
+			v[3*i+k]-=vcm[k];
+	}
+	return 0;	
+}
