@@ -19,7 +19,7 @@ double gaussiana(double mu, double sigma){
 	double z=0;
 	for(int i=0; i<n; i++)
 		z+=aleatorio();
-	z=sqrt(12)*(z/n-0.5);
+	z=(z/n-0.5)*sqrt(12.0*n);
 	return z*sigma+mu;
 }
 

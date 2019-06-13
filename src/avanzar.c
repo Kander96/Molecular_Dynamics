@@ -18,3 +18,10 @@ double ajustar_velocidad(double *v, double *f_old, double *f_new, double dt, int
 		*(v+i)+=(*(f_old+i)+(*(f_new+i)))*dt/2.0;
 	return 0;
 }
+
+double ajustar_temperatura(double *v, double T_m, double T_d, int N){
+	
+	for(int i=0; i<3*N; i++)
+		*(v+i)=*(v+i)*sqrt(T_d/T_m);
+
+}

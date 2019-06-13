@@ -29,8 +29,8 @@ double set_v(double *v, int N, double T){
 	double sigma=sqrt(T);
 	
 	for(int i=0; i<3*N; i++)
-		//*(v+i)=gaussiana(0.0,sigma);
-		*(v+i)=gaussiana_centrada_en_cero(sigma);
+		*(v+i)=gaussiana(0.0,sigma);
+		//*(v+i)=gaussiana_centrada_en_cero(sigma);
 	
 	double vcm[3]={0,0,0};
 	
@@ -42,6 +42,7 @@ double set_v(double *v, int N, double T){
 	for(int i=0; i<N; i++){
 		for(int k=0; k<3; k++)
 			v[3*i+k]-=vcm[k];
+			
 	}
 	return 0;	
 }

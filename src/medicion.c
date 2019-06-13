@@ -15,13 +15,6 @@ double medir_temperatura(double *v, int N){
 	
 	return T;
 }
-/*
-double medir_energía_cinética(double *v, int N){
-
-	double E_k=0;
-
-
-}*/
 
 double medir_energia_potencial(double *x, double *tabla, double L, double h, int N){
 	double dx, dy, dz, DX, E_p=0;
@@ -46,3 +39,14 @@ double medir_energia_potencial(double *x, double *tabla, double L, double h, int
 	}
 	return E_p;	
 }
+/*
+double distribucion_radial(char *filename, double *x, double L, int N){
+	
+	double rho=N/(L*L*L);
+	FILE *file;
+	file=open(filename, "a");
+	
+		
+	fclose(file);
+	return 0;
+}*/
