@@ -3,70 +3,76 @@
 #include "visualizacion.h"
 #include "interaccion.h"
 #include "avanzar.h"
+#include "medicion.h"
+#include "termalizacion.h"
 #include <stdio.h>
 #include <stdlib.h>
 #include <time.h>
 #include <unistd.h>
 
 int main(int argc, char *argv[]){
-	int L=4, N=2, M=2500;
+	int L=4, N=64, M=2500;
 	double *x, *v, *f_old, *f_new, *tabla;
-	double h, dt=0.01;
-	//float T=0.128;
+	double h, dt=0.01, lambda;
+	double T=1;
 	x = (double*)malloc(N*3*sizeof(double));
 	v = (double*)malloc(N*3*sizeof(double));
 	f_old = (double*)malloc(N*3*sizeof(double));
 	f_new = (double*)malloc(N*3*sizeof(double));
 	tabla = (double*)malloc(M*4*sizeof(double));
-	
-	for(int i=0; i<3*N; i++){
-		*(f_old+i)=0.0;
-		*(f_new+i)=0.0;
-		*(v+i)=0.0;
-	}
-	/*FILE *file;
-	file=fopen("tabla.txt", "w");
-	*/
+	srand(time(NULL));
+
 	h=tabla_de_fuerzas(tabla,M);
-	/*fprintf(file, "paso=%f\n",h);
 	
-	for(int i=0; i<M; i++)
-		fprintf(file, "%f\t%f\t%f\t%f\n", *(t+4*i),*(t+4*i+1),*(t+4*i+2),*(t+4*i+3));
-	fclose(file);
-	*/	
+//	printf("Temperatura inicial que le di: %lf\n", T);
+		
+		
+	set_box(x,N,L);
+	set_v(v,N,T);
 	
+/*	T=medir_temperatura(v,N);
 	
+	printf("Temperatura inicial que midió: %lf\n", T);
 	
-	*x=1;
-	*(x+1)=2;
-	*(x+2)=2;
-	*(x+3)=3;
-	*(x+4)=2;
-	*(x+5)=2;
+	E_p=medir_energia_potencial(x,tabla,L,h,N);
 	
+	printf("Energía potencial inical: %lf\n", E_p);
+*/	
+
 	calcular_fuerzas(f_old,x,tabla,N,L,h);
 	
-	//printf("las fuerzas calculadas son: f_x_1=%lf, f_y_1=%lf f_z_1=%lf y f_x_2=%lf, f_y_2=%lf, f_z_2=%lf", *f, *(f+1), *(f+2), *(f+3), *(f+4), *(f+5));	
-
-	//set_v(v,N,T);
 	
-	for(int i=0; i<200; i++){
-		save_lammpstrj("archivo.lammpstrj",x,v,N,L,i);
+	FILE *file;
+	file=fopen("datos/Termalizacion_H.txt", "w");
+	
+	
+	for(int i=0; i<400; i++){
+		//T=medir_temperatura(v,N);
+		//E_p=medir_energia_potencial(x,tabla,L,h,N);
+		lambda=termalizacion_H(v,N);
+		fprintf(file, "%i\t%lf\n", i, lambda);
+		save_lammpstrj("datos/archivo.lammpstrj",x,v,N,L,i);
 		ajustar_posicion(x,v,f_old,dt,L,N);
 		calcular_fuerzas(f_new,x,tabla,N,L,h);
 		ajustar_velocidad(v,f_old,f_new,dt,N);
 		for(int j=0; j<3*N; j++)
 			*(f_old+j)=*(f_new+j);
 	}
-
 	
+	fclose(file);
+	
+	T=medir_temperatura(v,N);
+	
+	printf("Temperatura final que midió: %lf\n", T);
+/*	
+	E_p=medir_energia_potencial(x,tabla,L,h,N);
+
+	printf("Energía potencial final: %lf\n", E_p);
 
 
 
 
-
-
-/*	clock_t t;
+	clock_t t;
 	
 	t=clock();
 	set_box(x,N,L);

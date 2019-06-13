@@ -1,6 +1,8 @@
 #ifndef INTERACCION_H
 #define INTERACCION_H
 
+#define cut_off 2.5
+
 #include "math.h"
 
 double tabla_de_fuerzas(double *tabla, int N);

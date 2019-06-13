@@ -5,9 +5,9 @@ double ajustar_posicion(double *x, double *v, double *f, double dt, double L, in
 	for(int i=0; i<3*N; i++){
 			*(x+i)+=*(v+i)*dt+(*(f+i))*dt*dt/2.0;
 			if(*(x+i)>L) 
-				*(x+i)=*(x+i)-L;
+				*(x+i)-=L;
 			else if(*(x+i)<0) 
-				*(x+i)=*(x+i)+L;
+				*(x+i)+=L;
 	}
 	return 0;
 }

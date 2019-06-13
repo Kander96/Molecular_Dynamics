@@ -5,6 +5,8 @@
 #include <time.h>
 #include <unistd.h>
 
+#define cut_off 2.5
+
 double tabla_de_fuerzas(double *tabla, int N){
 	
 	double h=2.5/N;
@@ -34,6 +36,9 @@ double calcular_fuerzas(double *f, double *x, double *tabla, int N, double L, do
 	double dx, dy, dz, DX;
 	int indice;
 	
+	for(int i=0; i<3*N; i++)
+		*(f+i)=0;
+	
 	for(int i=0; i<N-1; i++){
 		for(int j=i+1; j<N; j++){
 			
@@ -45,14 +50,14 @@ double calcular_fuerzas(double *f, double *x, double *tabla, int N, double L, do
 			dz=ajustar_dx_para_interaccion(dz,L);
 			DX=sqrt(dx*dx+dy*dy+dz*dz);
 			
-			if(DX<=2.5){
+			if(DX<=cut_off){
 				indice=(int)(DX/h);
-				*(f+i)+=*(tabla+4*indice+2)*dx;
-				*(f+i+1)+=*(tabla+4*indice+2)*dy;
-				*(f+i+2)+=*(tabla+4*indice+2)*dz;
-				*(f+j)-=*(tabla+4*indice+2)*dx;
-				*(f+j+1)-=*(tabla+4*indice+2)*dy;
-				*(f+j+2)-=*(tabla+4*indice+2)*dz;
+				*(f+3*i)+=*(tabla+4*indice+2)*dx;
+				*(f+3*i+1)+=*(tabla+4*indice+2)*dy;
+				*(f+3*i+2)+=*(tabla+4*indice+2)*dz;
+				*(f+3*j)-=*(tabla+4*indice+2)*dx;
+				*(f+3*j+1)-=*(tabla+4*indice+2)*dy;
+				*(f+3*j+2)-=*(tabla+4*indice+2)*dz;
 			
 			}
 		}
