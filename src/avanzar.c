@@ -23,5 +23,5 @@ double ajustar_temperatura(double *v, double T_m, double T_d, int N){
 	
 	for(int i=0; i<3*N; i++)
 		*(v+i)=*(v+i)*sqrt(T_d/T_m);
-
+	return 0;
 }
