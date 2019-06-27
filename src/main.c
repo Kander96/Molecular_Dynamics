@@ -59,7 +59,7 @@ int main(int argc, char *argv[]){
 	FILE *f;
 	
 //	sprintf(filename, "datos/Termalizacion_N_%i_T_%.3lf_L_%.3lf.txt", N,T,L);
-	sprintf(filename_2, "datos/Video_N_%i_T_%.3lf_L_%.3lf.lammpstrj", N,T,L);
+	//sprintf(filename_2, "datos/Video_N_%i_T_%.3lf_L_%.3lf.lammpstrj", N,T,L);
 	sprintf(filename, "datos/Estado_final.txt");
 	sprintf(filename_3, "datos/Energia_N_%i_T_%.3lf_L_%.3lf.txt", N,T,L);
 	
@@ -69,7 +69,7 @@ int main(int argc, char *argv[]){
 		//file=fopen(filename, "a");
 		//fprintf(file, "%i\t%lf\t%lf\n", i, lambda, H);
 		//fclose(file);
-		save_lammpstrj(filename_2,x,v,N,L,i);
+		//save_lammpstrj(filename_2,x,v,N,L,i);
 		ajustar_posicion(x,v,f_old,dt,L,N);
 		calcular_fuerzas(f_new,x,tabla,N,L,h);
 		ajustar_velocidad(v,f_old,f_new,dt,N);
@@ -90,7 +90,7 @@ int main(int argc, char *argv[]){
 			//file=fopen(filename, "a");
 			//fprintf(file, "%i\t%lf\t%lf\n", i, lambda, H);
 			//fclose(file);
-			save_lammpstrj(filename_2,x,v,N,L,b*100+i+200);
+			//save_lammpstrj(filename_2,x,v,N,L,b*100+i+200);
 			ajustar_posicion(x,v,f_old,dt,L,N);
 			calcular_fuerzas(f_new,x,tabla,N,L,h);
 			ajustar_velocidad(v,f_old,f_new,dt,N);
@@ -118,9 +118,9 @@ int main(int argc, char *argv[]){
 		fprintf(f, "%lf\t%lf\n", T, E_p);
 		fclose(f);
 		T=medir_temperatura(v,N);
+		printf("Temperatura final que midió: %lf\n", T);
 		ajustar_temperatura(v,T,T_D,N);
 		T=medir_temperatura(v,N);
-		printf("Temperatura final que midió: %lf\n", T);
 		b++;
 	}
 	
