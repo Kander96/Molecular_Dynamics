@@ -9,10 +9,10 @@ double termalizacion_verlet(double *x, double L, int N){
 	
 	double a, lambda=0.0;
 	
-	a=L*1.0/N;
+	a=L*1.0/cbrt(N);
 	
 	for(int i=0; i<3*N; i++)
-		lambda+=cos(2*pi/a*(*(x+i)-a/2.0))/(double)(3*N);
+		lambda+=cos(2*pi*((*(x+i))-a/2.0)/a)*1.0/(3*N);
 	return lambda;
 }
 
